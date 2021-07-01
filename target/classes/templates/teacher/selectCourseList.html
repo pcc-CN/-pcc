@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../../资料总结/bootstrap-4.0.0/favicon.ico">
+
+    <title>选课</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+  </head>
+
+  <body>
+  <div th:insert="~{commoms/TeaCommons::topbar}"></div>
+
+
+  <div class="container-fluid">
+      <div class="row">
+        <div th:replace="~{commoms/TeaCommons::sidebar(active='SelectCourse')}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+
+          <h2>选择列表</h2>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                    <th>教工号</th>
+                    <th>学生姓名</th>
+                    <th>学号</th>
+                    <th>课程名</th>
+                    <th>课程号</th>
+                    <th>课序号</th>
+                    <th>年份</th>
+                    <th>学期</th>
+                    <th>成绩</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr th:each="courseList:${CourseLists}">
+                <td th:text="${courseList.getFacultyNumber()}"></td>
+                <td th:text="${courseList.getStuName()}"></td>
+                <td th:text="${courseList.getStudentID()}"></td>
+                <td th:text="${courseList.getCourseName()}"></td>
+                  <td th:text="${courseList.getCourseID()}"></td>
+                  <td th:text="${courseList.getSerialNumber()}"></td>
+                  <td th:text="${courseList.getYear()}"></td>
+                  <td th:text="${courseList.getSemester()}"></td>
+                  <td th:text="${courseList.getGrades()}"></td>
+
+                <td>
+
+                    <div class="row">
+                    <form class="form-horizontal " th:action="@{/toAddGrades/}+${id}" method="post">
+                        <input type="text" th:value="${courseList.getFacultyNumber()}" name="FacultyNumber" hidden>
+                        <input type="text" th:value="${courseList.getStuName()}" name="StuName" hidden>
+                        <input type="text" th:value="${courseList.getStudentID()}" name="StudentID" hidden>
+                        <input type="text" th:value="${courseList.getCourseName()}" name="CourseName" hidden>
+                        <input type="text" th:value="${courseList.getCourseID()}" name="CourseID" hidden>
+                        <input type="text" th:value="${courseList.getSerialNumber()}" name="SerialNumber" hidden>
+                        <input type="text" th:value="${courseList.getYear()}" name="Year" hidden>
+                        <input type="text" th:value="${courseList.getSemester()}" name="Semester" hidden>
+                        <input type="text" th:value="${courseList.getGrades()}" name="Grades" hidden>
+
+                        <button type="submit" class="btn btn-sm btn-success" >添加成绩</button>
+                    </form>
+<!--                        <form class="form-horizontal " th:action="@{/DeleteCourse/}+${id}" method="post">-->
+<!--                            <input type="text" th:value="${courseStartList.getCourseID()}" name="CourseID" hidden>-->
+<!--                            <input type="text" th:value="${courseStartList.getSerialNumber()}" name="SerialNumber" hidden>-->
+<!--                            <button type="submit" class="btn btn-sm btn-danger" >删除课程</button>-->
+<!--                        </form>-->
+                    <div/>
+
+                    </td>
+<!--                        <a class="btn btn-sm btn-success" th:href="@{/AddCourse/}+${id}+${}">添加课程</a>-->
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../../资料总结/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../../资料总结/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../../资料总结/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
